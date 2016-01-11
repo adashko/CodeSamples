@@ -12,7 +12,7 @@ private class ContactSubStatusSchedulerTest {
 		Contact testInactiveContact = new Contact(
 			AccountId = testAccount.Id,
 			LastName = 'InactiveContact', 
-			Subscription_Is2__c = 'ANY_STATUS',
+			Subscription_Status__c = 'ANY_STATUS',
 			Subscription_Start__c = Date.today().addDays(1),
 			Subscription_End__c = Date.today().addDays(2)
 		);
@@ -22,7 +22,7 @@ private class ContactSubStatusSchedulerTest {
         	System.schedule('Contact Subscription Update Scheduler Test', '0 0 23 * * ?', new ContactSubStatusScheduler());
         Test.stopTest();
 
-        System.equals('Inactive', [SELECT Subscription_Is2__c FROM Contact WHERE Id = :testInactiveContact.Id].Subscription_Is2__c);
+        System.equals('Inactive', [SELECT Subscription_Status__c FROM Contact WHERE Id = :testInactiveContact.Id].Subscription_Status__c);
     } 
     
 }

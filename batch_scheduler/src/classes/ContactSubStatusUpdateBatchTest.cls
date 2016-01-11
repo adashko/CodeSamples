@@ -11,7 +11,7 @@ private class ContactSubStatusUpdateBatchTest {
 		Contact testInactiveContact = new Contact(
 			AccountId = testAccount.Id,
 			LastName = 'InactiveContact', 
-			Subscription_Is2__c = 'ANY_STATUS',
+			Subscription_Status__c = 'ANY_STATUS',
 			Subscription_Start__c = Date.today().addDays(1),
 			Subscription_End__c = Date.today().addDays(2)
 		);
@@ -20,7 +20,7 @@ private class ContactSubStatusUpdateBatchTest {
 		Contact testActiveContact = new Contact(
 			AccountId = testAccount.Id,
 			LastName = 'InactiveContact', 
-			Subscription_Is2__c = 'ANY_STATUS',
+			Subscription_Status__c = 'ANY_STATUS',
 			Subscription_Start__c = Date.today().addDays(-1),
 			Subscription_End__c = Date.today().addDays(1)
 		);
@@ -29,7 +29,7 @@ private class ContactSubStatusUpdateBatchTest {
 		Contact testExpiredContact = new Contact(
 			AccountId = testAccount.Id,
 			LastName = 'InactiveContact', 
-			Subscription_Is2__c = 'ANY_STATUS',
+			Subscription_Status__c = 'ANY_STATUS',
 			Subscription_Start__c = Date.today().addDays(-2),
 			Subscription_End__c = Date.today().addDays(-1)
 		);
@@ -40,9 +40,9 @@ private class ContactSubStatusUpdateBatchTest {
 			Database.executeBatch(new ContactSubStatusUpdateBatch());
 		Test.stopTest();
 
-		System.equals('Inactive', [SELECT Subscription_Is2__c FROM Contact WHERE Id = :testInactiveContact.Id].Subscription_Is2__c);
-		System.equals('Active', [SELECT Subscription_Is2__c FROM Contact WHERE Id = :testActiveContact.Id].Subscription_Is2__c);
-		System.equals('Expired', [SELECT Subscription_Is2__c FROM Contact WHERE Id = :testExpiredContact.Id].Subscription_Is2__c);
+		System.equals('Inactive', [SELECT Subscription_Status__c FROM Contact WHERE Id = :testInactiveContact.Id].Subscription_Status__c);
+		System.equals('Active', [SELECT Subscription_Status__c FROM Contact WHERE Id = :testActiveContact.Id].Subscription_Status__c);
+		System.equals('Expired', [SELECT Subscription_Status__c FROM Contact WHERE Id = :testExpiredContact.Id].Subscription_Status__c);
 	} 
 
 	@isTest
@@ -57,7 +57,7 @@ private class ContactSubStatusUpdateBatchTest {
 		Contact testInactiveContact = new Contact(
 			AccountId = testAccount.Id,
 			LastName = 'InactiveContact', 
-			Subscription_Is2__c = 'ANY_STATUS',
+			Subscription_Status__c = 'ANY_STATUS',
 			Subscription_Start__c = Date.today().addDays(1),
 			Subscription_End__c = Date.today().addDays(2)
 		);
@@ -69,7 +69,7 @@ private class ContactSubStatusUpdateBatchTest {
 			Database.executeBatch(new ContactSubStatusUpdateBatch(testInactiveContact.Id));
 		Test.stopTest();
 
-		System.equals('Inactive', [SELECT Subscription_Is2__c FROM Contact WHERE Id = :testInactiveContact.Id].Subscription_Is2__c);
+		System.equals('Inactive', [SELECT Subscription_Status__c FROM Contact WHERE Id = :testInactiveContact.Id].Subscription_Status__c);
 
 	}
 }

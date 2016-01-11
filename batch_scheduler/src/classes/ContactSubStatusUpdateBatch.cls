@@ -18,7 +18,7 @@ global class ContactSubStatusUpdateBatch implements Database.Batchable<sObject> 
 
 	
 	global Database.QueryLocator start(Database.BatchableContext bc) {
-		String queryString = 'SELECT Id, Subscription_Start__c, Subscription_End__c, Subscription_Is2__c FROM Contact WHERE Subscription_Is2__c != null';
+		String queryString = 'SELECT Id, Subscription_Start__c, Subscription_End__c, Subscription_Status__c FROM Contact WHERE Subscription_Status__c != null';
 		if (contactId != null) { // only for test 
 			queryString += ' AND Id = :contactId';
 		}
@@ -31,13 +31,13 @@ global class ContactSubStatusUpdateBatch implements Database.Batchable<sObject> 
 		// Update contact Subscription status
 		for (Contact cont: scope) {
 			if (cont.Subscription_Start__c <= todayDate && cont.Subscription_End__c >= todayDate) {
-				cont.Subscription_Is2__c = SUBSCRIPTION_ACTIVE_STATUS;
+				cont.Subscription_Status__c = SUBSCRIPTION_ACTIVE_STATUS;
 			} else {
 				if (cont.Subscription_Start__c > todayDate) {
-					cont.Subscription_Is2__c = SUBSCRIPTION_INACTIVE_STATUS;
+					cont.Subscription_Status__c = SUBSCRIPTION_INACTIVE_STATUS;
 				}
 				if (cont.Subscription_End__c < todayDate) {
-					cont.Subscription_Is2__c = SUBSCRIPTION_EXPIRED_STATUS;
+					cont.Subscription_Status__c = SUBSCRIPTION_EXPIRED_STATUS;
 				}
 			}
 		}
